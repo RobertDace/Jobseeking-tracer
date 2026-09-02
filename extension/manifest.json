@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "KarirHub Auto Tracer",
+  "version": "1.1.0",
+  "description": "Pelacak otomatis & sinkronisasi status realtime lamaran kerja KarirHub Kemnaker.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "KarirHub Auto Tracer"
+  },
+  "icons": {
+    "48": "icon.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "*://karirhub.kemnaker.go.id/*",
+    "*://siapkerja.kemnaker.go.id/*",
+    "http://localhost:3000/*",
+    "http://127.0.0.1:3000/*",
+    "https://*.vercel.app/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://karirhub.kemnaker.go.id/*",
+        "*://siapkerja.kemnaker.go.id/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://localhost:3000/*",
+        "http://127.0.0.1:3000/*",
+        "https://*.vercel.app/*"
+      ],
+      "js": ["dashboard-bridge.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
